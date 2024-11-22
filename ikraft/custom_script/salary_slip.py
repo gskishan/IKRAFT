@@ -27,9 +27,9 @@ class CustomSalarySlip(SalarySlip):
 			self.set("earnings", [])
 			self.set("deductions", [])
 			base=get_base_amount(self.employee)
-			frappe.msgrpint(__(base))
+			frappe.msgprint(_("Base Salary: {0}").format(base))
 			rt = ((base / self.total_working_days) / 8)
-			frappe.msgprint(__(format(rt)))
+			frappe.msgprint(_("Hourly Rate: {0}").format(rt))
 			self.hour_rate = rt
 			self.base_hour_rate = flt(self.hour_rate) * flt(self.exchange_rate)
 			frappe.msgprint(_("The calculated base hour rate is: {0}").format(self.base_hour_rate))
