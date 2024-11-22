@@ -34,7 +34,7 @@ class CustomSalarySlip(SalarySlip):
 			self.base_hour_rate = flt(self.hour_rate) * flt(self.exchange_rate)
 			frappe.msgprint(_("The calculated base hour rate is: {0}").format(self.base_hour_rate))
 			wages_amount = self.hour_rate * self.total_working_hours
-			frappe.msgrpint(_("Wages Amount:{0}").format(wages_amount))
+			# frappe.msgrpint(_("Wages Amount:{0}").format(wages_amount))
 			
 			self.add_earning_for_hourly_wages(
 				self, self._salary_structure_doc.salary_component, wages_amount
