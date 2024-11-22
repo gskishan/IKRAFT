@@ -27,15 +27,14 @@ class CustomSalarySlip(SalarySlip):
 			self.set("earnings", [])
 			self.set("deductions", [])
 			base=get_base_amount(self.employee)
+			frappe.msgrpint(__(base))
 			rt = ((base / self.total_working_days) / 8)
-			frappe.msgprint(__(((base / self.total_working_days) / 8)))
+			frappe.msgprint(__(format(rt)))
 			self.hour_rate = rt
 			self.base_hour_rate = flt(self.hour_rate) * flt(self.exchange_rate)
+			frappe.msgprint(_("The calculated base hour rate is: {0}").format(self.base_hour_rate))
 			wages_amount = self.hour_rate * self.total_working_hours
-			print(f"Base salary: {base}")
-			print(f"Total working days: {self.total_working_days}")
-			print(f"Daily rate: {base / self.total_working_days}")
-			print(f"Hourly rate (assuming 8.5 hours/day): {(base / self.total_working_days) / 8.5}")
+			
 			self.add_earning_for_hourly_wages(
 				self, self._salary_structure_doc.salary_component, wages_amount
 			)
