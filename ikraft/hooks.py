@@ -149,6 +149,14 @@ override_doctype_class = {
 # Scheduled Tasks
 # ---------------
 
+scheduler_events = {
+    "cron": {
+        "50 23 * * *": [
+            "ikraft.custom_script.employee_checkin.auto_check_out.auto_checkout_employees"
+        ]
+    }
+}
+
 # scheduler_events = {
 # 	"all": [
 # 		"ikraft.tasks.all"
