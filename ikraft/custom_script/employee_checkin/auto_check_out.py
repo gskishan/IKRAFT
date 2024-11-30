@@ -39,15 +39,11 @@ def auto_checkout_employees():
 
 
     for checkin in checkins:
-        shift_end_time = frappe.db.get_value(
-            "Shift Type", checkin["shift"], "end_time"
-        )
-
-        if not shift_end_time:
-           
-            continue
-
-        checkout_time = f"{today_date} {shift_end_time}"
+        if checkin.get("shift"):
+            shift_end_time = frappe.db.get_value("Shift Type", checkin["shift"], "end_time")
+            checkout_time = f"{today_date} {shift_end_time}" if shift_end_time else now_datetime()
+        else:
+            checkout_time = now_datetime()
 
         checkout_doc = frappe.get_doc({
             "doctype": "Employee Checkin",
