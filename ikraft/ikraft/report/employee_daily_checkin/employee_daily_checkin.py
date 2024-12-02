@@ -14,8 +14,8 @@ def get_data():
 	sql="""SELECT 
 			ec_in.employee ,
 			emp.employee_name,
-			ec_in.time AS "check_in_time",
-			ec_out.time AS "check_out_time",
+			 DATE_FORMAT(ec_in.time, '%d-%m-%Y %H:%i:%s') AS "check_in_time",
+			 DATE_FORMAT(ec_out.time, '%d-%m-%Y %H:%i:%s') AS "check_out_time",
 			es.name AS "shift_name",
 			ec_out.is_auto_created AS "is_auto_created"
 		FROM 
