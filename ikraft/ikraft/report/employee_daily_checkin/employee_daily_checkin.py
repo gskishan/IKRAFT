@@ -55,31 +55,31 @@ def get_columns():
 			'label': _('Employee Name'),
 			'fieldname': "employee_name",
 			'fieldtype': 'Data',
-			'width': 140
+			'width': 240
 		},
 		{
 			'label': _('Check In Time'),
 			'fieldname': "check_in_time",
 			'fieldtype': 'Data',
-			'width': 140
+			'width': 200
 		},
         {
             'fieldname': "check_out_time",
             'label': ('Check Out Time'),
             'fieldtype': 'Data',
-			'width': 140
+			'width': 200
         },
 		{
 			'label': _('Shift'),
 			'fieldname': "shift_name",
 			'fieldtype': 'Data',
-			'width': 140
+			'width': 160
 		},
         {
             'fieldname': "is_auto_created",
             'label': ('Is Auto Created'),
             'fieldtype': 'Check',
-			'width': 80
+			'width': 60
         }
 		
 	]
