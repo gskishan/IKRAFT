@@ -3,7 +3,7 @@
 
 import frappe
 from frappe import _
-
+from datetime import datetime, timedelta
 
 def execute(filters=None):
 	columns, data = get_columns(), get_data()
@@ -11,6 +11,7 @@ def execute(filters=None):
 
 
 def get_data():
+	yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
 	sql="""SELECT 
 			ec_in.employee ,
 			emp.employee_name,
@@ -34,10 +35,10 @@ def get_data():
 			ec_in.log_type = 'IN'
 			AND sa.start_date <= DATE(ec_in.time)
 			AND (sa.end_date IS NULL OR sa.end_date >= DATE(ec_in.time))
-			AND DATE(ec_in.time) = CURDATE() - INTERVAL 1 DAY
+			AND DATE(ec_in.time) ="{0}"
 		ORDER BY 
 			ec_in.employee, ec_in.time;
-		"""
+		""".format(yesterday)
 	return  frappe.db.sql(sql,as_dict=1)
 
 def get_columns():
