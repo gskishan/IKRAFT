@@ -6,12 +6,22 @@ from frappe import _
 from datetime import datetime, timedelta
 
 def execute(filters=None):
-	columns, data = get_columns(), get_data()
+	columns, data = get_columns(filters), get_data(filters)
 	return columns, data
+
+def data_condtion(filters):
+	yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+	condition="DATE(ec_in.time) ='{0}' ".format(yesterday)
+	if filters:
+		condition="DATE(ec_in.time) ='{0}' ".format(filters.get("from_date"))
+		
+	
+
 
 
 def get_data():
 	yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+	cond=data_condtion(filters)
 	sql="""SELECT 
 			ec_in.employee ,
 			emp.employee_name,
