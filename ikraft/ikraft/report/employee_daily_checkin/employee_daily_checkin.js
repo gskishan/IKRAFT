@@ -4,9 +4,9 @@
 frappe.query_reports["Employee Daily Checkin"] = {
 	"filters": [{
 			"fieldname":"from_date",
-			"label": __("From Date"),
+			"label": __("Date"),
 			"fieldtype": "Date",
-			"default":frappe.datetime.get_today(),
+
 		},
 	]
 };
