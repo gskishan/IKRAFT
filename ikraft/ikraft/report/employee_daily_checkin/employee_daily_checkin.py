@@ -28,6 +28,9 @@ def get_data():
 			 DATE_FORMAT(ec_in.time, '%d-%m-%Y %H:%i:%s') AS "check_in_time",
 			 DATE_FORMAT(ec_out.time, '%d-%m-%Y %H:%i:%s') AS "check_out_time",
 			es.name AS "shift_name",
+   			ec_out.name as check_out_id,
+   			ec_in.name as check_in_id,
+      
 			ec_out.is_auto_created AS "is_auto_created"
 		FROM 
 			`tabEmployee Checkin` ec_in
@@ -75,7 +78,7 @@ def get_columns():
 			'width': 200
 		},
 		{
-			'label': _('CheckIn'),
+			'label': _('Check-In'),
 			'fieldname': "check_in_id",
 			'fieldtype': 'Link',
 			 'options': 'Employee Checkin',
@@ -88,7 +91,7 @@ def get_columns():
 			'width': 200
         },
 		{
-			'label': _('CheckOut'),
+			'label': _('Check-Out'),
 			'fieldname': "check_out_id",
 			'fieldtype': 'Link',
 			 'options': 'Employee Checkin',
