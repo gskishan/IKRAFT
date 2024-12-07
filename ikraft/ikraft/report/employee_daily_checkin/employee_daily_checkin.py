@@ -45,10 +45,10 @@ def get_data():
 			ec_in.log_type = 'IN'
 			AND sa.start_date <= DATE(ec_in.time)
 			AND (sa.end_date IS NULL OR sa.end_date >= DATE(ec_in.time))
-			AND DATE(ec_in.time) ="{0}"
+			{0}
 		ORDER BY 
 			ec_in.employee, ec_in.time;
-		""".format(yesterday)
+		""".format(cond)
 	return  frappe.db.sql(sql,as_dict=1)
 
 def get_columns():
@@ -74,12 +74,26 @@ def get_columns():
 			'fieldtype': 'Data',
 			'width': 200
 		},
+		{
+			'label': _('CheckIn'),
+			'fieldname': "check_in_id",
+			'fieldtype': 'Link',
+			 'options': 'Employee Checkin',
+			'width': 200
+		},
         {
             'fieldname': "check_out_time",
             'label': ('Check Out Time'),
             'fieldtype': 'Data',
 			'width': 200
         },
+		{
+			'label': _('CheckOut'),
+			'fieldname': "check_out_id",
+			'fieldtype': 'Link',
+			 'options': 'Employee Checkin',
+			'width': 200
+		},
 		{
 			'label': _('Shift'),
 			'fieldname': "shift_name",
