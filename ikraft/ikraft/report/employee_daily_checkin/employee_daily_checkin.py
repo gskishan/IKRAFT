@@ -6,7 +6,7 @@ from frappe import _
 from datetime import datetime, timedelta
 
 def execute(filters=None):
-	columns, data = get_columns(filters), get_data(filters)
+	columns, data = get_columns(), get_data(filters)
 	return columns, data
 
 def data_condtion(filters):
