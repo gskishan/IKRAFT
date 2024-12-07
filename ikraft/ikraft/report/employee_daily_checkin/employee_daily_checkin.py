@@ -11,9 +11,9 @@ def execute(filters=None):
 
 def data_condtion(filters):
 	yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
-	condition="DATE(ec_in.time) ='{0}' ".format(yesterday)
+	condition="and DATE(ec_in.time) ='{0}' ".format(yesterday)
 	if filters:
-		condition="DATE(ec_in.time) ='{0}' ".format(filters.get("from_date"))
+		condition="and DATE(ec_in.time) ='{0}' ".format(filters.get("from_date"))
 		
 	
 
@@ -52,6 +52,7 @@ def get_data(filters):
 		ORDER BY 
 			ec_in.employee, ec_in.time;
 		""".format(cond)
+	frappe.errprint(sql)
 	return  frappe.db.sql(sql,as_dict=1)
 
 def get_columns():
