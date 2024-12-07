@@ -14,6 +14,8 @@ def data_condtion(filters):
 	condition="and DATE(ec_in.time) ='{0}' ".format(yesterday)
 	if filters:
 		condition="and DATE(ec_in.time) ='{0}' ".format(filters.get("from_date"))
+
+	return condition
 		
 	
 
