@@ -20,42 +20,42 @@ def data_condtion(filters):
 	
 
 
-
 def get_data(filters):
-	yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
-	cond=data_condtion(filters)
-	sql="""SELECT 
-			ec_in.employee ,
-			emp.employee_name,
-			 DATE_FORMAT(ec_in.time, '%d-%m-%Y %H:%i:%s') AS "check_in_time",
-			 DATE_FORMAT(ec_out.time, '%d-%m-%Y %H:%i:%s') AS "check_out_time",
-			es.name AS "shift_name",
-   			ec_out.name as check_out_id,
-   			ec_in.name as check_in_id,
-      
-			ec_out.is_auto_created AS "is_auto_created"
-		FROM 
-			`tabEmployee Checkin` ec_in
-		LEFT JOIN 
-			`tabEmployee Checkin` ec_out ON ec_in.employee = ec_out.employee 
-			AND ec_out.time > ec_in.time 
-			AND ec_out.log_type = 'OUT'
-		LEFT JOIN 
-			`tabEmployee` emp ON ec_in.employee = emp.name
-		LEFT JOIN 
-			`tabShift Assignment` sa ON ec_in.employee = sa.employee
-		LEFT JOIN 
-			`tabShift Type` es ON sa.shift_type = es.name
-		WHERE 
-			ec_in.log_type = 'IN'
-			AND sa.start_date <= DATE(ec_in.time)
-			AND (sa.end_date IS NULL OR sa.end_date >= DATE(ec_in.time))
-			{0}
-		ORDER BY 
-			ec_in.employee, ec_in.time;
-		""".format(cond)
-	frappe.errprint(sql)
-	return  frappe.db.sql(sql,as_dict=1)
+    yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+    cond = data_condtion(filters)
+    sql = """SELECT 
+                ec_in.employee,
+                emp.employee_name,
+                DATE_FORMAT(ec_in.time, '%d-%m-%Y %H:%i:%s') AS "check_in_time",
+                DATE_FORMAT(ec_out.time, '%d-%m-%Y %H:%i:%s') AS "check_out_time",
+                es.name AS "shift_name",
+                ec_out.name AS check_out_id,
+                ec_in.name AS check_in_id,
+                ec_out.is_auto_created AS "is_auto_created"
+            FROM 
+                `tabEmployee Checkin` ec_in
+            LEFT JOIN 
+                `tabEmployee Checkin` ec_out ON ec_in.employee = ec_out.employee 
+                AND ec_out.time > ec_in.time 
+                AND ec_out.log_type = 'OUT'
+                AND DATE(ec_out.time) = DATE(ec_in.time)
+            LEFT JOIN 
+                `tabEmployee` emp ON ec_in.employee = emp.name
+            LEFT JOIN 
+                `tabShift Assignment` sa ON ec_in.employee = sa.employee
+            LEFT JOIN 
+                `tabShift Type` es ON sa.shift_type = es.name
+            WHERE 
+                ec_in.log_type = 'IN'
+                AND sa.start_date <= DATE(ec_in.time)
+                AND (sa.end_date IS NULL OR sa.end_date >= DATE(ec_in.time))
+                {0}
+            ORDER BY 
+                ec_in.employee, ec_in.time;
+          """.format(cond)
+    frappe.errprint(sql)
+    return frappe.db.sql(sql, as_dict=1)
+
 
 def get_columns():
 	columns=[]
