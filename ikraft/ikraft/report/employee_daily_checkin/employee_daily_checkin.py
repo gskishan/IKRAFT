@@ -19,7 +19,7 @@ def data_condtion(filters):
 
 
 
-def get_data():
+def get_data(filters):
 	yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
 	cond=data_condtion(filters)
 	sql="""SELECT 
