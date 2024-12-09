@@ -6,7 +6,7 @@ frappe.query_reports["Employee Daily Checkin"] = {
 			"fieldname":"from_date",
 			"label": __("Date"),
 			"fieldtype": "Date",
-			"default":frappe.utils.add_days(frappe.utils.get_today(), -1),
+			"default":frappe.datetime.add_days(frappe.datetime.get_today(), -1),
 
 		},
 	]
