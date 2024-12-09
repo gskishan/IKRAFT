@@ -10,8 +10,8 @@ def execute(filters=None):
 	return columns, data
 
 def data_condtion(filters):
-	yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
-	condition="and DATE(ec_in.time) ='{0}' ".format(yesterday)
+	today =datetime.now().strftime('%Y-%m-%d')
+	condition="and DATE(ec_in.time) ='{0}' ".format(today)
 	if filters:
 		condition="and DATE(ec_in.time) ='{0}' ".format(filters.get("from_date"))
 
