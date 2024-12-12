@@ -138,13 +138,11 @@ override_doctype_class = {
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Employee Checkin": {
+        "validate": "ikraft.custom_script.employee_checkin.employee_checkin.validate"
+    }
+}
 
 # Scheduled Tasks
 # ---------------
