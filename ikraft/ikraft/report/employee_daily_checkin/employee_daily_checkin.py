@@ -36,7 +36,7 @@ def get_data(filters):
                 `tabEmployee Checkin` ec_in
             LEFT JOIN 
                 `tabEmployee Checkin` ec_out ON ec_in.employee = ec_out.employee 
-                AND ec_out.time > ec_in.time 
+                AND date(ec_out.time) = date(ec_in.time) 
                 AND ec_out.log_type = 'OUT'
                 AND DATE(ec_out.time) = DATE(ec_in.time)
             LEFT JOIN 
