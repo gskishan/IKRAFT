@@ -140,7 +140,8 @@ override_doctype_class = {
 
 doc_events = {
 	"Employee Checkin": {
-        "Before Insert": "ikraft.custom_script.employee_checkin.employee_checkin.validate"
+        "validate": "ikraft.custom_script.employee_checkin.employee_checkin.validate",
+	"before_insert": "ikraft.custom_script.employee_checkin.employee_checkin.validate",
     }
 }
 
