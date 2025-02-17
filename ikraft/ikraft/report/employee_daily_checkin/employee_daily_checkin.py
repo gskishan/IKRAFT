@@ -9,7 +9,7 @@ def execute(filters=None):
 	columns, data = get_columns(), get_data(filters)
 	return columns, data
 
-def data_condition(filters):
+def data_condtion(filters):
     if filters:
         condition = ""
 
