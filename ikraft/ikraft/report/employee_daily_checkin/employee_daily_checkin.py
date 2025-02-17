@@ -9,26 +9,28 @@ def execute(filters=None):
 	columns, data = get_columns(), get_data(filters)
 	return columns, data
 
-def data_condtion(filters):
-	today =datetime.now().strftime('%Y-%m-%d')
-	condition="and DATE(ec_in.time) ='{0}' ".format(today)
-	if filters:
-		condition="and DATE(ec_in.time) ='{0}' ".format(filters.get("from_date"))
+def data_condition(filters):
+    if filters:
+        condition = ""
 
-	return condition
-    # condition = ""
-    # if filters:
-    #     print("\n\n\n\n\n------",(filters.get("employee_name")))
-    #     if filters.get("from_date") and filters.get("to_date"):
-    #         condition += "AND DATE(ec_in.time) BETWEEN '{0}' AND '{1}' ".format(filters.get("from_date"), filters.get("to_date"))
-    #     elif filters.get("from_date"):
-    #         condition += "AND DATE(ec_in.time) = '{0}' ".format(filters.get("from_date"))
-        
-    #     if filters.get("employee_name"):
-    #         condition += "AND LOWER(emp.employee_name) LIKE LOWER('%{0}%') ".format(filters.get("employee_name"))
+        if filters.get("from_date") and filters.get("to_date"):
+            condition = "AND DATE(ec_in.time) BETWEEN '{0}' AND '{1}' ".format(
+                filters.get("from_date"), filters.get("to_date")
+            )
+        elif filters.get("from_date"):
+            condition = "AND DATE(ec_in.time) = '{0}' ".format(filters.get("from_date"))
 
-    
-    # return condition
+        if filters.get("employee_name"):
+            condition += "AND LOWER(emp.employee_name) LIKE LOWER('%{0}%') ".format(
+                filters.get("employee_name")
+            )
+    else:
+        today = datetime.now().strftime('%Y-%m-%d')
+        condition = "AND DATE(ec_in.time) = '{0}' ".format(today)
+
+    return condition
+
+
 		
 	
 
@@ -62,6 +64,7 @@ def get_data(filters):
 
           """.format(cond)
     frappe.errprint(sql)
+    frappe.log_error("SQL Query Execution", sql)
     return frappe.db.sql(sql, as_dict=1)
 
 
