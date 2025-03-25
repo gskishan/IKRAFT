@@ -2,8 +2,9 @@ import frappe
 
 @frappe.whitelist()
 def validate(doc, method):
-    if checkifduplicate(doc) and doc.is_new():
-        frappe.throw("This employee already has a log-{} with the same date".format(doc.log_type))
+    pass
+    # if checkifduplicate(doc) and doc.is_new():
+    #     frappe.throw("This employee already has a log-{} with the same date".format(doc.log_type))
 
 def checkifduplicate(doc):
     sql = """SELECT name FROM `tabEmployee Checkin` 
