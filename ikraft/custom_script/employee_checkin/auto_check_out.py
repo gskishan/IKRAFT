@@ -23,6 +23,7 @@ def auto_checkout_employees():
                 `tabEmployee` e ON e.name = ec.employee
             WHERE 
                 ec.log_type = 'IN'
+                AND ec.shift = 'General'
                 AND DATE(ec.time) = %(today_date)s
             
                 AND NOT EXISTS (
@@ -32,6 +33,7 @@ def auto_checkout_employees():
                         `tabEmployee Checkin` ec_out
                     WHERE 
                         ec_out.log_type = 'OUT'
+                           AND ec_out.shift = 'General' 
                         AND ec_out.employee = ec.employee
                         AND DATE(ec_out.time) = %(today_date)s
                 )
