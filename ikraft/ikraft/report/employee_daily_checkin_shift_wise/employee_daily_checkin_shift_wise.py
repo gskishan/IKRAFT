@@ -47,7 +47,16 @@ def get_data(filters):
             ec_in.name AS check_in_id,
             DATE_FORMAT(ec_out.time, '%d-%m-%Y %H:%i:%s') AS check_out_time,
             ec_out.name AS check_out_id,
-            ec_out.is_auto_created AS is_auto_created
+            ec_out.is_auto_created AS is_auto_created,
+
+            SEC_TO_TIME(TIMESTAMPDIFF(SECOND, ec_in.time, ec_out.time)) AS total_time,
+            
+            CASE 
+                WHEN TIMESTAMPDIFF(SECOND, ec_in.time, ec_out.time) > 28800
+                THEN SEC_TO_TIME(TIMESTAMPDIFF(SECOND, ec_in.time, ec_out.time) - 28800)
+                ELSE '00:00:00'
+            END AS ot
+
         FROM
             `tabEmployee Checkin` ec_in
         LEFT JOIN
@@ -127,5 +136,18 @@ def get_columns():
             'label': _('Is Auto Created'),
             'fieldtype': 'Check',
             'width': 60
+        },
+        
+        {
+            'label': _('Total Time'),
+            'fieldname': 'total_time',
+            'fieldtype': 'Data',
+            'width': 150
+        },    
+        {
+            'label': _('OT'),
+            'fieldname': 'ot',
+            'fieldtype': 'Data',
+            'width': 100
         }
     ]
