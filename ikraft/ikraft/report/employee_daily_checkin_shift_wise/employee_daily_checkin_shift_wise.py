@@ -51,12 +51,15 @@ def get_data(filters):
 
             SEC_TO_TIME(TIMESTAMPDIFF(SECOND, ec_in.time, ec_out.time)) AS total_time,
             
-            CASE 
-                WHEN ec_out.is_auto_created = 1 THEN '00:00:00'
-                WHEN TIMESTAMPDIFF(SECOND, ec_in.time, ec_out.time) > 32400
-                THEN SEC_TO_TIME(TIMESTAMPDIFF(SECOND, ec_in.time, ec_out.time) - 32400)
-                ELSE '00:00:00' 
-            END AS ot
+        CASE 
+            WHEN ec_in.shift != 'Factory Shift' THEN '00:00:00'
+            WHEN ec_out.is_auto_created = 1 THEN '00:00:00'
+            WHEN TIMESTAMPDIFF(SECOND, ec_in.time, ec_out.time) > 32400
+            THEN SEC_TO_TIME(TIMESTAMPDIFF(SECOND, ec_in.time, ec_out.time) - 32400)
+            ELSE '00:00:00' 
+        END AS ot
+
+
              
 
         FROM
